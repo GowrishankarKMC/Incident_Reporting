@@ -2331,6 +2331,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Modal\Root.cs" />
     <Compile Include="QRIncident_Reporting.aspx.cs">
       <DependentUpon>QRIncident_Reporting.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

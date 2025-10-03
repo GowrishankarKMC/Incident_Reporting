@@ -17,5 +17,6 @@ namespace Incident_Reporting.Modal
         public string doctor_name { get; set; }
         public string display_name { get; set; }
         public string reporting_to { get; set; }
+        public string coun { get; set; }
     }
 }

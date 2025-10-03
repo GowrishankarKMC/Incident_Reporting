@@ -920,9 +920,16 @@ $('body').on('keyup', '#value', function (event) {
             const value = inputFieldValue[inputFieldValue.length - 1];
             const regex = /[a-zA-Z./\s/g]/;
 
-            if (!regex.test(value)) {
+            if (inputFieldValue.length < 15) {
+                if (!regex.test(value)) {
+                    $('#exampleModal').modal('show');
+                    $('.modal-body').text("Only letters and Dot and Space charaters are allowed");
+                    inputField.value = inputFieldValue.slice(0, -1);
+                }
+            }
+            else {
                 $('#exampleModal').modal('show');
-                $('.modal-body').text("Only letters and Dot and Space charaters are allowed");
+                $('.modal-body').text("System should not allow more then 15 character in the name field");
                 inputField.value = inputFieldValue.slice(0, -1);
             }
         }
@@ -932,15 +939,21 @@ $('body').on('keyup', '#value', function (event) {
             return true;
         }
         else {
-            
             const inputField = document.getElementById('othername');
             const inputFieldValue = inputField.value;
             const value = inputFieldValue[inputFieldValue.length - 1];
             const regex = /[a-zA-Z./\s/g]/;
 
-            if (!regex.test(value)) {
+            if (inputFieldValue.length < 15) {
+                if (!regex.test(value)) {
+                    $('#exampleModal').modal('show');
+                    $('.modal-body').text("Only letters and Dot and Space charaters are allowed");
+                    inputField.value = inputFieldValue.slice(0, -1);
+                }
+            }
+            else{
                 $('#exampleModal').modal('show');
-                $('.modal-body').text("Only letters and Dot and Space charaters are allowed");
+                $('.modal-body').text("System should not allow more then 15 character in the name field");
                 inputField.value = inputFieldValue.slice(0, -1);
             }
         }

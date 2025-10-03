@@ -92,6 +92,22 @@ namespace Incident_Reporting
         string involver, string patient_name, string involved_docname, string involved_empid
         , string reporting_to, string attender, string visitor, string involved_othersname, string occupation, string attending_physician, string incident)
         {
+            RestResponse ss = new RestResponse();
+
+            if (reportedby == "Others")
+            {
+                string Query = $"SELECT count(*) as coun FROM incident_entry WHERE username = 'webuser' AND reportby = '{reportedby}' AND mobileno = '{mobileno}' and trunc(createdon) = trunc(sysdate)";
+
+                String responses = API.CallGetChoices(Query);
+                Root s = JsonConvert.DeserializeObject<Root>(responses.ToString());
+                string value = s.result[0].result.row[0].coun;
+                if(int.Parse(value) > 2)
+                {
+                    ss.StatusCode = System.Net.HttpStatusCode.BadRequest;
+                    ss.Content = "With this mobile number you should not entry more then two time";
+                    return ss;
+                }
+            }
             var options = new RestClientOptions() { };
             var client = new RestClient(options);
             var request = new RestRequest(AppSettings.GetSaveData(), Method.Post);

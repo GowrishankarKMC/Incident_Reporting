@@ -396,6 +396,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
+                debugger;
                 $('.submitspinner').addClass('d-none');
                 if (response.d.StatusCode == 200) {
                     var responsejson = JSON.parse(response.d.Content);
@@ -416,6 +417,13 @@
                         $('.modal-header').addClass('bg-danger');
                         $('.modal-body').text(responsejson.result[0].error.msg);
                     }
+                }
+                else if (response.d.StatusCode == 400)
+                {
+                    $('#exampleModal').modal('show');
+                    $('.modal-content').addClass('bg-danger');
+                    $('.modal-header').addClass('bg-danger');
+                    $('.modal-body').text(responsejson);
                 }
                 else {
                     $('#exampleModal').modal('show');
