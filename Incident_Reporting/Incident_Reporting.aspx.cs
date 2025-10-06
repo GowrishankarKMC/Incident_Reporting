@@ -1,9 +1,9 @@
-﻿using Incident_Reporting.Modal;
-using Newtonsoft.Json;
-using RestSharp;
-using System;
+﻿using System;
 using System.Configuration;
 using System.Web.Services;
+using Incident_Reporting.Modal;
+using Newtonsoft.Json;
+using RestSharp;
 
 namespace Incident_Reporting
 {
@@ -101,10 +101,38 @@ namespace Incident_Reporting
                 String responses = API.CallGetChoices(Query);
                 Root s = JsonConvert.DeserializeObject<Root>(responses.ToString());
                 string value = s.result[0].result.row[0].coun;
-                if(int.Parse(value) > 2)
+                if (int.Parse(value) >= 1)
                 {
                     ss.StatusCode = System.Net.HttpStatusCode.BadRequest;
-                    ss.Content = "With this mobile number you should not entry more then two time";
+                    ss.Content = "With this mobile number you should not entry more then One time per day.";
+                    return ss;
+                }
+            }
+            else if (reportedby == "Employee")
+            {
+                string Query = $"SELECT count(*) as coun FROM incident_entry WHERE username = 'webuser' AND reportby = '{reportedby}' AND EMPID = '{empid}' and trunc(createdon) = trunc(sysdate)";
+
+                String responses = API.CallGetChoices(Query);
+                Root s = JsonConvert.DeserializeObject<Root>(responses.ToString());
+                string value = s.result[0].result.row[0].coun;
+                if (int.Parse(value) >= 1)
+                {
+                    ss.StatusCode = System.Net.HttpStatusCode.BadRequest;
+                    ss.Content = "With this employee number you should not entry more then One time per day.";
+                    return ss;
+                }
+            }
+            else if (reportedby == "Doctor")
+            {
+                string Query = $"SELECT count(*) as coun FROM incident_entry WHERE username = 'webuser' AND reportby = '{reportedby}' AND DOCTORNAME = '{doc}' and trunc(createdon) = trunc(sysdate)";
+
+                String responses = API.CallGetChoices(Query);
+                Root s = JsonConvert.DeserializeObject<Root>(responses.ToString());
+                string value = s.result[0].result.row[0].coun;
+                if (int.Parse(value) >= 1)
+                {
+                    ss.StatusCode = System.Net.HttpStatusCode.BadRequest;
+                    ss.Content = "With this docter you should not entry more then One time per day.";
                     return ss;
                 }
             }

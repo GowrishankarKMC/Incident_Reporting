@@ -420,10 +420,11 @@
                 }
                 else if (response.d.StatusCode == 400)
                 {
+                    debugger;
                     $('#exampleModal').modal('show');
                     $('.modal-content').addClass('bg-danger');
                     $('.modal-header').addClass('bg-danger');
-                    $('.modal-body').text(responsejson);
+                    $('.modal-body').text(response.d.Content);
                 }
                 else {
                     $('#exampleModal').modal('show');
